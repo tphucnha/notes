@@ -34,4 +34,4 @@ Resize fs of LV fedora-home: `resize2fs /dev/mapper/fedora-home 23G`
 Reduce LV fedora-home to 23G: `lvreduce -L 23G /dev/mapper/fedora-home`
 
 Chưa hiểu sao phải chạy lại cái này cái nữa: `resize2fs /dev/mapper/fedora-home`
-## Create new logical volume `arch-root`
+### Create new logical volume `arch-root`
