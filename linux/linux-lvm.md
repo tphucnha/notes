@@ -31,3 +31,5 @@ Output of `lvs` command:
 - `resize2fs /dev/mapper/fedora-home`: No idea for the reason of doing this
 ### Create new logical volume `arch-root`
 In one go `lvcreate -l +100%FREE fedora -n arch-root`
+
+# Rename VG and LV without problems in THE NEXT BOOT =))
