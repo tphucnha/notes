@@ -1,37 +1,33 @@
 # LVM Resize – How to Decrease an LVM Partition
 https://www.rootusers.com/lvm-resize-how-to-decrease-an-lvm-partition/
 
-## Đang có:
-PV: sda3
+## What I have:
+_PV: /dev/sda3_
 
-VG: fedora
+Output of `lvs` command:
+  LV          | VG     | Attr       | LSize
+  ------------|--------|------------|------
+  root        | fedora | -wi-ao---- | 40.00g
+  home        | fedora | -wi-ao---- | **33.00g**
+  swap        | fedora | -wi-ao---- | <7.79g
 
-LV: 
+## What I want: get 10GB of space from `fedora-home` (for installing archlinux)
+_PV: /dev/sda3_
 
-- fedora-swap - 8GB
-- fedora-root (ext4) - 40 GB
-- fedora-home (ext4) - **33 GB**
-
-## Cần cắt `fedora-home` ra để cài thêm archlinux
-PV: sda3
-
-VG: fedora
-
-LV: 
-
-- fedora-swap - 8GB
-- fedora-root (ext4) - 40 GB
-- fedora-home (ext4) - **23 GB**
+Output of `lvs` command:
+  LV          | VG     | Attr       | LSize
+  ------------|--------|------------|------
+  root        | fedora | -wi-ao---- | 40.00g
+  home        | fedora | -wi-ao---- | **23.00g**
+  swap        | fedora | -wi-ao---- | <7.79g
+  **arch-root**   | **fedora** | **-wi-a-----** | **10.00g**
 
 ## Step by step
 ### Resize `fedora-home`
-Umount: `umount /dev/mapper/fedora-home`
-
-Checking command: `e2fsck -fy /dev/mapper/fedora-home`
-
-Resize fs of LV fedora-home: `resize2fs /dev/mapper/fedora-home 23G`
-
-Reduce LV fedora-home to 23G: `lvreduce -L 23G /dev/mapper/fedora-home`
-
-Chưa hiểu sao phải chạy lại cái này cái nữa: `resize2fs /dev/mapper/fedora-home`
+- `umount /dev/mapper/fedora-home`: Umount
+- `e2fsck -fy /dev/mapper/fedora-home`: Checking command
+- `resize2fs /dev/mapper/fedora-home 23G`: Resize fs of LV fedora-home
+- `lvreduce -L 23G /dev/mapper/fedora-home`: Reduce LV fedora-home to 23G
+- `resize2fs /dev/mapper/fedora-home`: No idea for the reason of doing this
 ### Create new logical volume `arch-root`
+In one go `lvcreate -l +100%FREE fedora -n arch-root`
