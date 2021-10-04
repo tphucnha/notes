@@ -8,7 +8,7 @@ Output of `lvs` command:
   LV          | VG     | LSize
   ------------|--------|------
   ----        | ------ | -----
-  home        | fedora | **33.00g**
+  home        | fedora | _33.00g_
   ----        | ------ | -----
 
 ## What I want: 
